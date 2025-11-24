@@ -5,27 +5,14 @@ export function HomeNavbar() {
   const authMember = null;
   return (
     <div className="home-navbar">
-      <Container sx={{ mt: "10px", height: "642px" }}>
-        <Stack
-          sx={{ height: "50px" }}
-          flexDirection={"row"}
-          justifyContent={"space-between"}
-          alignItems={"center"}
-        >
+      <Container className="navbar-container">
+        <Stack className="menu">
           <Box>
             <NavLink to="/">
-              <img
-                style={{ width: "225px", height: "100px" }}
-                src="/icons/dewalt-4-logo.svg"
-              />
+              <img className="brand-logo" src="/icons/dewalt-4-logo.svg" />
             </NavLink>
           </Box>
-          <Stack
-            flexDirection={"row"}
-            justifyContent={"space-between"}
-            minWidth={"700px"}
-            alignItems={"center"}
-          >
+          <Stack className="links">
             <Box className={"hover-line"}>
               <NavLink to="/" activeClassName={"underline"}>
                 Home
@@ -60,15 +47,16 @@ export function HomeNavbar() {
             {/* BASKET */}
             {!authMember ? (
               <Box>
-                <Button
-                  variant="contained"
-                  style={{ background: "#ffbe00ed", color: "#242424" }}
-                >
+                <Button variant="contained" className="login-button">
                   Login
                 </Button>
               </Box>
             ) : (
-              <img />
+              <img
+                className="user-avatar "
+                src={"/icons/default-user.svg"}
+                aria-haspopup="true"
+              />
             )}
           </Stack>
         </Stack>
