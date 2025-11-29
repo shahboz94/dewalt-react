@@ -1,7 +1,8 @@
 import { Box, Button, Container, Stack } from "@mui/material";
 import { NavLink } from "react-router-dom";
+import Basket from "./Basket";
 
-export function HomeNavbar() {
+export default function HomeNavbar() {
   const authMember = true;
   return (
     <div className="home-navbar">
@@ -42,20 +43,16 @@ export function HomeNavbar() {
                 Help
               </NavLink>
             </Box>
-            {/* BASKET */}
-            {!authMember ? (
-              <Box>
-                <Button variant="contained" className="login-button">
-                  Login
-                </Button>
-              </Box>
-            ) : (
+            {authMember && (
               <img
-                className="user-avatar "
-                src={"/icons/default-user.svg"}
+                className="user-avatar"
+                src="/icons/icons8-profile-5.png"
+                alt="User Avatar"
                 aria-haspopup="true"
               />
             )}
+            {/* BASKET */}
+            <Basket />
           </Stack>
         </Stack>
         <Stack className={"header-frame"}>
@@ -72,6 +69,13 @@ export function HomeNavbar() {
               ) : null}
             </Box>
           </Stack>
+          {!authMember ? (
+            <Box>
+              <Button variant={"contained"} className="login-button">
+                Login
+              </Button>
+            </Box>
+          ) : null}
         </Stack>
       </Container>
     </div>
