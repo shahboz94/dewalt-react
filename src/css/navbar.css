@@ -191,6 +191,13 @@
   color: #242424;
 }
 
+.home-navbar .navbar-container .menu .login-button {
+  width: 120px;
+  height: 50px;
+  background: #ffbe00ed;
+  color: #242424;
+}
+
 .other-navbar .navbar-container .menu .user-avatar {
   width: 50px;
   height: 50px;
@@ -293,12 +300,6 @@
   font-style: normal;
   font-weight: 400;
   line-height: normal;
-  color: #242424;
-}
-
-.home-navbar .navbar-container .header-frame .login-button {
-  margin-top: 300px;
-  background: #ffbe00ed;
   color: #242424;
 }
 
