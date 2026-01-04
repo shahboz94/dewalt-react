@@ -23,48 +23,54 @@ export default function PopularProducts() {
         <Stack className="popular-section">
           <Box className="category-title">Popular Products</Box>
           <Stack className="cards-frame">
-            {list.map((ele, index) => {
-              return (
-                <CssVarsProvider key={index}>
-                  <Card className={"card"}>
-                    <CardContent sx={{ justifyContent: "flex-end" }}>
-                      <Stack
-                        flexDirection={"row"}
-                        justifyContent={"space-between"}
-                      >
-                        <Typography
-                          level="h2"
-                          fontSize="lg"
-                          textColor="#fff"
-                          mb={1}
+            {list.length !== 0 ? (
+              list.map((ele, index) => {
+                return (
+                  <CssVarsProvider key={index}>
+                    <Card className={"card"}>
+                      <CardContent sx={{ justifyContent: "flex-end" }}>
+                        <Stack
+                          flexDirection={"row"}
+                          justifyContent={"space-between"}
                         >
-                          {ele.productName}
-                        </Typography>
-                        <Typography
-                          sx={{
-                            fontWeight: "md",
-                            color: "neutral.300",
-                            alignItems: "center",
-                            display: "flex",
-                          }}
-                        >
-                          {" "}
-                          20
-                          <VisibilityIcon
-                            sx={{ fontSize: 25, marginLeft: 5 }}
-                          />
-                        </Typography>
-                      </Stack>
-                    </CardContent>
+                          <Typography
+                            level="h2"
+                            fontSize="lg"
+                            textColor="#fff"
+                            mb={1}
+                          >
+                            {ele.productName}
+                          </Typography>
+                          <Typography
+                            sx={{
+                              fontWeight: "md",
+                              color: "neutral.300",
+                              alignItems: "center",
+                              display: "flex",
+                            }}
+                          >
+                            {" "}
+                            20
+                            <VisibilityIcon
+                              sx={{ fontSize: 25, marginLeft: 5 }}
+                            />
+                          </Typography>
+                        </Stack>
+                      </CardContent>
 
-                    <CardCover>
-                      <img src={ele.imagePath} alt="" />
-                    </CardCover>
-                    <CardCover className={"card-cover"} />
-                  </Card>
-                </CssVarsProvider>
-              );
-            })}
+                      <CardCover>
+                        <img src={ele.imagePath} alt="" />
+                      </CardCover>
+                      <CardCover className={"card-cover"} />
+                    </Card>
+                  </CssVarsProvider>
+                );
+              })
+            ) : (
+              <Box className="no-products">
+                New products are Not available!!!
+              </Box>
+            )}
           </Stack>
         </Stack>
       </Container>
