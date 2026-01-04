@@ -16,21 +16,17 @@ const list = [
   { productName: "Kebab", imagePath: "/img/kebab-fresh.webp" },
 ];
 
-export default function PopularDishes() {
+export default function PopularProducts() {
   return (
     <div className="popular-dishes-frame">
       <Container>
         <Stack className="popular-section">
-          <Box className="category-title">Popular Dishes</Box>
+          <Box className="category-title">Popular Products</Box>
           <Stack className="cards-frame">
             {list.map((ele, index) => {
               return (
                 <CssVarsProvider key={index}>
                   <Card className={"card"}>
-                    <CardCover>
-                      <img src={ele.imagePath} alt="" />
-                    </CardCover>
-                    <CardCover className={"card-cover"} />
                     <CardContent sx={{ justifyContent: "flex-end" }}>
                       <Stack
                         flexDirection={"row"}
@@ -61,23 +57,10 @@ export default function PopularDishes() {
                       </Stack>
                     </CardContent>
 
-                    <CardOverflow
-                      sx={{
-                        display: "flex",
-                        gap: 1.5,
-                        py: 1.5,
-                        px: "var(--Card-padding)",
-                        borderTop: "1px solid",
-                        height: "60px",
-                      }}
-                    >
-                      <Typography
-                        startDecorator={<DescriptionOutlinedIcon />}
-                        textColor="neutral.300"
-                      >
-                        This is delicious meal
-                      </Typography>
-                    </CardOverflow>
+                    <CardCover>
+                      <img src={ele.imagePath} alt="" />
+                    </CardCover>
+                    <CardCover className={"card-cover"} />
                   </Card>
                 </CssVarsProvider>
               );
