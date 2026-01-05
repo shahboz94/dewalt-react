@@ -1,28 +1,30 @@
 export enum ProductSize {
-  SMALL = "SMALL",
-  NORMAL = "NORMAL",
+  COMPACT = "COMPACT",
+  STANDARD = "STANDARD",
   LARGE = "LARGE",
+  INDUSTRIAL = "INDUSTRIAL",
   SET = "SET",
 }
-
-export enum ProductVolume {
-  HALF = 0.5,
-  ONE = 1,
-  ONE_POINT_TWO = 1.2,
-  ONE_POINT_FIVE = 1.5,
-  TWO = 2,
+export enum ProductPower {
+  V12 = 12,
+  V18 = 18,
+  V20 = 20,
+  V40 = 40,
+  V60 = 60,
 }
-
 export enum ProductStatus {
-  PAUSE = "PAUSE",
+  ACTIVE = "ACTIVE",
+  OUT_OF_STOCK = "OUT_OF_STOCK",
+  PAUSED = "PAUSED",
+  DELETED = "DELETED",
   PROCESS = "PROCESS",
-  DELETE = "DELETE",
 }
-
-export enum ProductCollection {
-  DISH = "DISH",
-  SALAD = "SALAD",
-  DESSERT = "DESSERT",
-  DRINK = "DRINK",
+export enum ProductCategory {
+  DRILL = "DRILL", // drel
+  IMPACT = "IMPACT", // udarli
+  SAW = "SAW", // arra
+  GRINDER = "GRINDER", // bolgarka
+  BATTERY = "BATTERY", // akkumulyator
+  ACCESSORY = "ACCESSORY", // qo‘shimcha
   OTHER = "OTHER",
 }
