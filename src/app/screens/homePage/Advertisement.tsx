@@ -10,7 +10,7 @@ export default function Advertisement() {
         playsInline
         data-video-media=""
       >
-        <source type="video/mp4" src="video/DW_ATOMIC.mp4" />
+        <source type="video/mp4" src="/video/DW_ATOMIC.mp4" />
         Your browser does not support the video tag.
       </video>
     </div>

@@ -282,11 +282,13 @@
 
 .homepage .advertisement-frame {
   width: 100%;
-  height: 693px;
+  height: 700px;
   display: flex;
   overflow: hidden;
   transform: perspective(0px);
   box-shadow: -3px 0px 20px 14px #343434;
+  position: relative;
+  z-index: 2;
 }
 
 .homepage .advertisement-frame .advertisement-video {
@@ -296,4 +298,226 @@
   box-shadow: 0px -8px 90px rgb(215 215 255);
   transform: scale(1.6);
   overflow: hidden;
+}
+
+/** EVENTS **/
+
+.homepage .events-frame {
+  width: 100%;
+  height: 750px;
+  margin: 0;
+  padding-top: 50px;
+  position: relative;
+  z-index: 1;
+  background: linear-gradient(180deg, #f8f8ff 0%, #ffffff 100%);
+  display: flex;
+}
+
+.homepage .events-frame .category-title {
+  font-family: "Dancing Script";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 42px;
+  line-height: 50px;
+  padding-top: 20px;
+  color: #343434;
+  letter-spacing: -0.5px;
+}
+
+.homepage .events-frame .events-subtitle {
+  font-family: "GT Walsheim Pro";
+  font-size: 16px;
+  line-height: 24px;
+  color: #666;
+  margin-top: 8px;
+  font-weight: 400;
+}
+
+.homepage .events-frame .events-main {
+  position: relative;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.homepage .events-frame .events-main .events-text {
+  width: auto;
+  height: 100px;
+  margin-bottom: 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.homepage .events-frame .events-main .prev-next-frame {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 250px;
+  margin: 40px 0 40px 0;
+  height: 25px;
+}
+
+.homepage .events-frame .dot-frame-pagination {
+  position: relative;
+  width: auto;
+  display: flex;
+}
+
+.homepage .events-frame .events-main .events-info {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.homepage .events-frame .events-info .events-info-frame {
+  position: relative;
+  width: 500px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.homepage .events-frame .events-img {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  border-radius: 12px;
+  background-size: cover;
+  overflow: hidden;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+  transition: transform 0.3s ease;
+}
+
+.homepage .events-frame .events-desc {
+  position: absolute;
+  margin-bottom: 7px;
+  padding: 16px;
+  display: flex;
+  width: 90%;
+  height: auto;
+  bottom: 5px;
+  background: linear-gradient(135deg, #ffffff 0%, #f8f8ff 100%);
+  box-shadow: 0 6px 20px rgba(25, 25, 46, 0.08);
+  border-radius: 10px;
+  border: 1px solid rgba(215, 181, 134, 0.2);
+  backdrop-filter: blur(10px);
+}
+
+.homepage .events-frame .events-desc .events-bott {
+  width: 97%;
+  height: auto;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.homepage .events-frame .events-desc .events-bott .bott-left {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.homepage .events-frame .bott-left .event-title-speaker {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.homepage .events-frame .event-title-speaker strong {
+  font-family: "GT Walsheim Pro";
+  font-size: 20px;
+  font-weight: 600;
+  color: #343434;
+}
+
+.homepage .events-frame .event-title-speaker .event-organizator {
+  display: flex;
+  align-items: center;
+}
+
+.homepage .events-frame .event-title-speaker .event-organizator img {
+  width: 20px;
+  margin-right: 10px;
+}
+
+.homepage .events-frame .event-organizator .spec-text-author {
+  font-family: "GT Walsheim Pro";
+  font-style: normal;
+  line-height: 34px;
+  color: #140342;
+}
+
+.homepage .events-frame .bott-left .text-desc {
+  margin-top: 8px;
+  font-family: "GT Walsheim Pro";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 15px;
+  line-height: 24px;
+  color: #555;
+}
+
+.homepage .events-frame .bott-left .bott-info {
+  margin-top: 10px;
+  display: flex;
+  justify-content: flex-end;
+  flex-direction: row;
+  width: 100%;
+  height: 16px;
+}
+
+.homepage .events-frame .bott-info .bott-info-main {
+  margin-left: 16px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex-direction: row;
+  width: auto;
+  height: 100%;
+  font-family: "GT Walsheim Pro";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 13px;
+  line-height: 16px;
+  color: #888;
+}
+
+.homepage .events-frame .bott-info .bott-info-main img {
+  margin-right: 10px;
+}
+
+.homepage .events-frame .swiper-wrapper {
+  display: flex;
+  flex-direction: row;
+}
+
+.homepage .events-frame .swiper-pagination-bullet {
+  margin-right: 8px;
+  width: 10px;
+  height: 10px;
+  text-align: center;
+  opacity: 0.5;
+  background: #343434;
+  border-radius: 50%;
+  transition: all 0.3s ease;
+}
+
+.homepage .events-frame .swiper-pagination-bullet-active {
+  background: #d7b586;
+  opacity: 1;
+  border-radius: 50%;
+  width: 12px;
+  height: 12px;
 }
