@@ -11,6 +11,7 @@ export interface AppRootState {
 
 /** HOMEPAGE  **/
 export interface HomePageSate {
+  popularProducts: any;
   popularDishes: Product[];
   newDishes: Product[];
   topUsers: Member[];
