@@ -9,24 +9,33 @@ import CardOverflow from "@mui/joy/CardOverflow";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import DescriptionOutlinedIcon from "@mui/icons-material/DescriptionOutlined";
 
-const list = [
-  { productName: "Lavash", imagePath: "/img/lavash.webp" },
-  { productName: "Cutlet", imagePath: "/img/cutlet.webp" },
-  { productName: "Kebeb", imagePath: "/img/kebab.webp" },
-  { productName: "Kebab", imagePath: "/img/kebab-fresh.webp" },
-];
+import { useSelector } from "react-redux";
+import { createSelector } from "reselect";
+import { Product } from "../../../lib/types/product";
+import { serverApi } from "../../../lib/config";
+import { retrievePopularProducts } from "./selector";
+
+/** REDUX SLICE & SELECTOR **/
+
+const setPopularProductsRetrieve = createSelector(
+  retrievePopularProducts,
+  (popularProducts) => ({ popularProducts })
+);
 
 export default function PopularProducts() {
+  const { popularProducts } = useSelector(setPopularProductsRetrieve);
+
   return (
     <div className="popular-dishes-frame">
       <Container>
         <Stack className="popular-section">
           <Box className="category-title">Popular Products</Box>
           <Stack className="cards-frame">
-            {list.length !== 0 ? (
-              list.map((ele, index) => {
+            {popularProducts.length !== 0 ? (
+              popularProducts.map((ele: Product) => {
+                const imagePath = `${serverApi}/${ele.productImages[0]}`;
                 return (
-                  <CssVarsProvider key={index}>
+                  <CssVarsProvider key={ele._id}>
                     <Card className={"card"}>
                       <CardContent sx={{ justifyContent: "flex-end" }}>
                         <Stack
@@ -49,17 +58,16 @@ export default function PopularProducts() {
                               display: "flex",
                             }}
                           >
-                            {" "}
-                            20
+                            {ele.productViews}
                             <VisibilityIcon
-                              sx={{ fontSize: 25, marginLeft: 5 }}
+                              sx={{ fontSize: 25, marginLeft: "5px" }}
                             />
                           </Typography>
                         </Stack>
                       </CardContent>
 
                       <CardCover>
-                        <img src={ele.imagePath} alt="" />
+                        <img src={imagePath} alt="" />
                       </CardCover>
                       <CardCover className={"card-cover"} />
                     </Card>
@@ -68,7 +76,7 @@ export default function PopularProducts() {
               })
             ) : (
               <Box className="no-products">
-                New products are Not available!!!
+                Popular products are not available!!!
               </Box>
             )}
           </Stack>

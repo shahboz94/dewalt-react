@@ -1,14 +1,14 @@
-import { createSelector } from "@reduxjs/toolkit/dist";
+import { createSelector } from "@reduxjs/toolkit";
 import { AppRootState } from "../../../lib/types/screen";
 
 const selectHomePage = (state: AppRootState) => state.homePage;
 
-export const retrieveopularProducts = createSelector(
+export const retrievePopularProducts = createSelector(
   selectHomePage,
-  (HomePage) => HomePage.popularProducts
+  (homePage) => homePage.popularProducts
 );
 
 export const retrieveNewProducts = createSelector(
   selectHomePage,
-  (HomePage) => HomePage.newProducts
+  (homePage) => homePage.newProducts
 );
