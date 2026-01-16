@@ -6,18 +6,20 @@ import Advertisement from "./Advertisement";
 import Events from "./Events";
 import "../../../css/home.css";
 
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { Dispatch } from "@reduxjs/toolkit";
 import { createSelector } from "@reduxjs/toolkit";
-import { setPopularProducts } from "./slice";
+import { setNewProducts, setPopularProducts } from "./slice";
 import ProductService from "../../services/ProductService";
 import { Product } from "../../../lib/types/product";
 import { ProductCategory } from "../../../lib/enums/product.enum";
 import { retrievePopularProducts } from "./selector";
+import "../../../css/home.css";
 
 /** REDUX SLICE & SELECTOR **/
 const actionDispatch = (dispatch: Dispatch) => ({
   setPopularProducts: (data: Product[]) => dispatch(setPopularProducts(data)),
+  setNewProducts: (data: Product[]) => dispatch(setNewProducts(data)),
 });
 const setPopularProductsRetrieve = createSelector(
   retrievePopularProducts,
@@ -25,8 +27,7 @@ const setPopularProductsRetrieve = createSelector(
 );
 
 export default function HomePage() {
-  const { setPopularProducts } = actionDispatch(useDispatch());
-  const { popularProducts } = useSelector(setPopularProductsRetrieve);
+  const { setPopularProducts, setNewProducts } = actionDispatch(useDispatch());
 
   useEffect(() => {
     // Backend server data fetch => Data
@@ -42,6 +43,17 @@ export default function HomePage() {
         setPopularProducts(data);
       })
       .catch((err: any) => console.log(err));
+    product
+      .getProducts({
+        page: 1,
+        limit: 4,
+        order: "createdAt",
+        ProductCategory: ProductCategory.DRILL,
+      })
+      .then((data) => {
+        setNewProducts(data);
+      })
+      .catch((err) => console.log(err));
   }, []);
 
   return (

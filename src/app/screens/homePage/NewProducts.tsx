@@ -7,24 +7,25 @@ import { CssVarsProvider } from "@mui/joy/styles";
 import CardOverflow from "@mui/joy/CardOverflow";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import Divider from "../../components/divider";
-
 import { useSelector } from "react-redux";
-import { createSelector } from "@reduxjs/toolkit";
+import { createSelector } from "reselect";
 import { retrieveNewProducts } from "./selector";
+import { Product } from "../../../lib/types/product";
+import { serverApi } from "../../../lib/config";
+import { ProductCategory } from "../../../lib/enums/product.enum";
 
-/** REDUX SELECTOR **/
+/** REDUX SLICE & SELECTOR **/
+
 const newProductsRetriever = createSelector(
   retrieveNewProducts,
-  (products) => ({ newProducts: products })
+  (newProducts) => ({
+    newProducts,
+  })
 );
 
 export default function NewProducts() {
   const { newProducts } = useSelector(newProductsRetriever);
-
-  if (!newProducts || newProducts.length === 0) {
-    return <Box className="no-products">New products are Not available!!!</Box>;
-  }
-
+  console.log("newProducts", newProducts);
   return (
     <div className="new-products-frame">
       <Container>
@@ -32,36 +33,53 @@ export default function NewProducts() {
           <Box className="category-title">New Products</Box>
           <Stack className="cards-frame">
             <CssVarsProvider>
-              {newProducts.map((product, index) => (
-                <Card key={index} variant="outlined" className="card">
-                  <CardOverflow>
-                    <AspectRatio ratio="1">
-                      <img
-                        src={product.productImages?.[0] || "/img/default.jpg"}
-                        alt={product.productName}
-                      />
-                    </AspectRatio>
-                  </CardOverflow>
+              {newProducts.length !== 0 ? (
+                newProducts.map((product: Product) => {
+                  const imagePath = `${serverApi}/${product.productImages[0]}`;
+                  const sizeVolume =
+                    product.productCategory === ProductCategory.DRILL
+                      ? product.productSize + "l"
+                      : product.productSize + "size";
+                  return (
+                    <Card
+                      key={product._id}
+                      variant="outlined"
+                      className={"card"}
+                    >
+                      <CardOverflow>
+                        <div className="product-sale">{sizeVolume}</div>
+                        <AspectRatio ratio="1">
+                          <img src={imagePath} alt="" />
+                        </AspectRatio>
+                      </CardOverflow>
 
-                  <CardOverflow variant="soft" className="product-detail">
-                    <Stack className="info">
-                      <Stack flexDirection="row">
-                        <Typography className="title">
-                          {product.productName}
-                        </Typography>
-                        <Divider height="24" width="2" bg="#d9d9d9" />
-                        <Typography className="price">
-                          ${product.productPrice}
-                        </Typography>
-                      </Stack>
-                      <Typography className="views">
-                        {product.productViews ?? 0}
-                        <VisibilityIcon sx={{ fontSize: 20, ml: 0.5 }} />
-                      </Typography>
-                    </Stack>
-                  </CardOverflow>
-                </Card>
-              ))}
+                      <CardOverflow variant="soft" className="product-detail">
+                        <Stack className="info">
+                          <Stack flexDirection="row">
+                            <Typography className="title">
+                              {product.productName}
+                            </Typography>
+                            <Divider height="24" width="2" bg="#d9d9d9" />
+                            <Typography className={"price"}>
+                              {product.productPrice}
+                            </Typography>
+                          </Stack>
+                          <Stack>
+                            <Typography className={"views"}>
+                              {product.productViews}
+                              <VisibilityIcon sx={{ fontSize: 20, ml: 0.5 }} />
+                            </Typography>
+                          </Stack>
+                        </Stack>
+                      </CardOverflow>
+                    </Card>
+                  );
+                })
+              ) : (
+                <Box className="no-products">
+                  New products are Not available!!!
+                </Box>
+              )}
             </CssVarsProvider>
           </Stack>
         </Stack>
