@@ -17,66 +17,27 @@ import BatteryChargingFullIcon from "@mui/icons-material/BatteryChargingFull";
 import ExtensionIcon from "@mui/icons-material/Extension";
 import {
   ProductCategory,
-  ProductSize,
-  ProductPower,
   ProductStatus,
 } from "../../../lib/enums/product.enum";
 
-type ProductItem = {
-  id: string;
-  productName: string;
-  ImagePath: string;
-  category: ProductCategory;
-  size: ProductSize;
-  power?: ProductPower;
-  status: ProductStatus;
-  price: number;
-};
+import { setProducts } from "./slice";
+import { useDispatch, useSelector } from "react-redux";
+import { Dispatch } from "@reduxjs/toolkit";
+import { createSelector } from "reselect";
+import { retrieveProducts } from "./selector";
+import { Product } from "../../../lib/types/product";
 
-const products: ProductItem[] = [
-  {
-    id: "DCD996B",
-    productName: "DCD996B",
-    ImagePath: "/img/DW_Power.jpg",
-    category: ProductCategory.DRILL,
-    size: ProductSize.STANDARD,
-    power: ProductPower.V20,
-    status: ProductStatus.ACTIVE,
-    price: 129,
-  },
-  {
-    id: "DCF887B",
-    productName: "DCF887B",
-    ImagePath: "/img/dewalt.jpg",
-    category: ProductCategory.IMPACT,
-    size: ProductSize.COMPACT,
-    power: ProductPower.V18,
-    status: ProductStatus.ACTIVE,
-    price: 99,
-  },
-  {
-    id: "DCS551B",
-    productName: "DCS551B",
-    ImagePath: "/img/dwt-cutabove.jpg",
-    category: ProductCategory.SAW,
-    size: ProductSize.LARGE,
-    power: ProductPower.V40,
-    status: ProductStatus.OUT_OF_STOCK,
-    price: 199,
-  },
-  {
-    id: "DCG420B",
-    productName: "DCG420B",
-    ImagePath: "/img/DCG420B_E1.jpg",
-    category: ProductCategory.GRINDER,
-    size: ProductSize.STANDARD,
-    power: ProductPower.V20,
-    status: ProductStatus.ACTIVE,
-    price: 89,
-  },
-];
+/** REDUX SLICE & SELECTOR **/
+const actionDispatch = (dispatch: Dispatch) => ({
+  setProducts: (data: Product[]) => dispatch(setProducts(data)),
+});
+const productsRetriever = createSelector(retrieveProducts, (products) => ({
+  products,
+}));
 
 export default function Products() {
+  const { products } = useSelector(productsRetriever);
+
   const [query, setQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState<
     ProductCategory | "ALL"
@@ -84,7 +45,7 @@ export default function Products() {
 
   const visibleProducts = useMemo(() => {
     return products.filter((p) => {
-      if (selectedCategory !== "ALL" && p.category !== selectedCategory)
+      if (selectedCategory !== "ALL" && p.productCategory !== selectedCategory)
         return false;
       if (query && !p.productName.toLowerCase().includes(query.toLowerCase()))
         return false;
@@ -181,11 +142,11 @@ export default function Products() {
                 {visibleProducts.length !== 0 ? (
                   visibleProducts.map((product) => {
                     return (
-                      <Stack key={product.id} className={"product-card"}>
+                      <Stack key={product._id} className={"product-card"}>
                         <Stack
                           className="product-img"
                           sx={{
-                            backgroundImage: `url(${product.ImagePath})`,
+                            backgroundImage: `url(${product.productImages[0]})`,
                           }}
                         >
                           <Button className="shop-btn">
@@ -206,7 +167,9 @@ export default function Products() {
                           >
                             <Badge
                               badgeContent={
-                                product.status === ProductStatus.ACTIVE ? 20 : 0
+                                product.productStatus === ProductStatus.ACTIVE
+                                  ? 20
+                                  : 0
                               }
                               color="secondary"
                             >
@@ -221,7 +184,7 @@ export default function Products() {
                           </span>
                           <div className={"product-desc-icon"}>
                             <MonetizationOnIcon />
-                            {product.price}
+                            {product.productPrice}
                           </div>
                         </Box>
                       </Stack>

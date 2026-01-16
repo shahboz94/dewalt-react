@@ -10,6 +10,27 @@ import "swiper/css/free-mode";
 import "swiper/css/navigation";
 import "swiper/css/thumbs";
 import { FreeMode, Navigation, Thumbs } from "swiper";
+import { useDispatch, useSelector } from "react-redux";
+import { Dispatch } from "@reduxjs/toolkit";
+import { setAdmin, setChosenProduct } from "./slice";
+import { createSelector } from "reselect";
+import { retrieveAdmin, retrieveChosenProduct } from "./selector";
+import { Product } from "../../../lib/types/product";
+
+/** REDUX SLICE & SELECTOR **/
+const actionDispatch = (dispatch: Dispatch) => ({
+  setRestaurant: (data: Product[]) => dispatch(setAdmin(data)),
+  setChosenProduct: (data: Product[]) => dispatch(setChosenProduct(data)),
+});
+const adminRetriever = createSelector(retrieveAdmin, (admin) => ({
+  admin,
+}));
+const chosenProductRetriever = createSelector(
+  retrieveChosenProduct,
+  (chosenProduct) => ({
+    chosenProduct,
+  })
+);
 
 export default function ChosenProduct() {
   return (
@@ -24,7 +45,7 @@ export default function ChosenProduct() {
             modules={[FreeMode, Navigation, Thumbs]}
             className="swiper-area"
           >
-            {["/img/cutlet.webp", "/img/kebab-fresh.webp"].map(
+            {["/img/DWAW71424_A1.jpg", "/img/DWAW71424_A1.jpg"].map(
               (ele: string, index: number) => {
                 return (
                   <SwiperSlide key={index}>

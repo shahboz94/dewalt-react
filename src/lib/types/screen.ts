@@ -11,15 +11,14 @@ export interface AppRootState {
 
 /** HOMEPAGE  **/
 export interface HomePageSate {
-  popularProducts: any;
-  popularDishes: Product[];
-  newDishes: Product[];
+  popularProducts: Product[];
+  newProducts: Product[];
   topUsers: Member[];
 }
 
 /** PRODUCTS PAGE  **/
 export interface ProductsPageSate {
-  restaurant: Member | null;
+  admin: Member | null;
   chosenProduct: Product | null;
   products: Product[];
 }

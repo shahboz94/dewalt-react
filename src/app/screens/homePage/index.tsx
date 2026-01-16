@@ -37,7 +37,7 @@ export default function HomePage() {
         page: 1,
         limit: 4,
         order: "productViews",
-        ProductCategory: ProductCategory.DRILL,
+        productCategory: ProductCategory.DRILL,
       })
       .then((data) => {
         setPopularProducts(data);
@@ -48,7 +48,7 @@ export default function HomePage() {
         page: 1,
         limit: 4,
         order: "createdAt",
-        ProductCategory: ProductCategory.DRILL,
+        productCategory: ProductCategory.DRILL,
       })
       .then((data) => {
         setNewProducts(data);
