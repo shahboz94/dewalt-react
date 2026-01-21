@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { ChangeEvent, useEffect, useMemo, useState } from "react";
 import { Box, Button, Container, Stack } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import MonetizationOnIcon from "@mui/icons-material/MonetizationOn";
@@ -27,8 +27,9 @@ import { createSelector } from "reselect";
 
 import { setProducts } from "./slice";
 import { retrieveProducts } from "./selector";
-import { Product } from "../../../lib/types/product";
+import { Product, ProductInquiry } from "../../../lib/types/product";
 import ProductService from "../../services/ProductService";
+import { useHistory } from "react-router-dom";
 
 const actionDispatch = (dispatch: Dispatch) => ({
   setProducts: (data: Product[]) => dispatch(setProducts(data)),
@@ -41,6 +42,16 @@ const productsRetriever = createSelector(retrieveProducts, (products) => ({
 export default function Products() {
   const { products } = useSelector(productsRetriever);
   const { setProducts } = actionDispatch(useDispatch());
+  const [productSearch, setProductSearch] = useState<ProductInquiry>({
+    page: 1,
+    limit: 8,
+    order: "createdAt",
+    productCategory: ProductCategory.DRILL,
+    search: "",
+  });
+
+  const [searchText, setSearchText] = useState<string>("");
+  const history = useHistory();
 
   const [query, setQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState<
@@ -54,41 +65,48 @@ export default function Products() {
   const [page, setPage] = useState(1);
 
   useEffect(() => {
-    const productService = new ProductService();
-
-    productService
-      .getProducts({
-        page,
-        limit: 8,
-        order: "createdAt",
-        productCategory:
-          selectedCategory === "ALL" ? undefined : selectedCategory,
-        search: query || undefined,
-      })
-      .then((data) => {
-        setProducts(data); // faqat backenddan kelgan 8 ta
-      })
-      .catch(console.log);
-  }, [page, selectedCategory, query]);
-
-  const getCategoryIcon = (category: ProductCategory) => {
-    switch (category) {
-      case ProductCategory.DRILL:
-        return <BuildIcon />;
-      case ProductCategory.IMPACT:
-        return <ElectricBoltIcon />;
-      case ProductCategory.SAW:
-        return <ContentCutIcon />;
-      case ProductCategory.GRINDER:
-        return <SettingsIcon />;
-      case ProductCategory.BATTERY:
-        return <BatteryChargingFullIcon />;
-      case ProductCategory.ACCESSORY:
-        return <ExtensionIcon />;
-      default:
-        return <BuildIcon />;
+    const product = new ProductService();
+    product
+      .getProducts(productSearch)
+      .then((data) => setProducts(data))
+      .catch((err) => console.log(err));
+  }, [productSearch, setProducts]);
+  useEffect(() => {
+    if (searchText === "") {
+      productSearch.search = "";
+      setProductSearch({ ...productSearch });
     }
+  }, [searchText]);
+
+  /** HANDLERS **/
+  const searchCollectionHandler = (collection: ProductCategory) => {
+    productSearch.page = 1;
+    productSearch.productCategory = collection;
+    setProductSearch({ ...productSearch });
   };
+
+  const searchOrderHandler = (order: string) => {
+    productSearch.page = 1;
+    productSearch.order = order;
+    setProductSearch({ ...productSearch });
+  };
+
+  const searchProductHandler = () => {
+    productSearch.search = searchText;
+    setProductSearch({ ...productSearch });
+  };
+
+  const paginationHandler = (e: ChangeEvent<any>, value: number) => {
+    productSearch.page = value;
+    setProductSearch({ ...productSearch });
+  };
+
+  const chooseDishHandler = (id: string) => {
+    history.push(`/products/${id}`);
+  };
+  function getCategoryIcon(arg0: ProductCategory): React.ReactNode {
+    throw new Error("Function not implemented.");
+  }
 
   return (
     <div className="products">
